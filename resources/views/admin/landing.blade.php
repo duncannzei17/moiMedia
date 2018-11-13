@@ -31,6 +31,7 @@
       <ul class="app-menu">
         <li><a class="app-menu__item" href="{{action('ArticlesController@index')}}"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Articles</span></a></li>
         <li><a class="app-menu__item" href="{{ url('/publisher') }}"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Publish</span></a></li>
+        <li><a class="app-menu__item" href="{{action('ArticlesController@create')}}"><i class="app-menu__icon fa fa-bar-chart-o"></i><span class="app-menu__label">Report</span></a></li>
       </ul>
     </aside>
     <main class="app-content">
@@ -45,20 +46,29 @@
       </div>
       <div class="row">
         <div class="col-md-12">
-          <div class="tile">
+                @if (session('del'))    
+                    <div class="alert alert-danger text-center">
+                        {{Session::get('del')}}
+                    </div>
+                  @endif
               @if(count($articles)>0)
                 @foreach($articles as $article)
-                   <div class="well">
-                        <p>Title: {{$article->article_title}}</p>
-                        <p>Author: {{$article->author_name}}</p>
-                        <p>Image: {{$article->image}}</p>
+                   <div class="tile">
+                        <p><strong>Title:</strong> {{$article->article_title}}</p>
+                        <p><strong>Author:</strong> {{$article->author_name}}</p>
+                        <p><strong>Image:</strong> {{$article->image}}</p>
+                        <p><strong>Date:</strong> {{$article->created_at}}</p>
+                        <a href="{{action('ArticlesController@edit', $article->id)}}" class="btn btn-primary">Edit</a>
+                        {!!Form::open(['action' => ['ArticlesController@destroy', $article->id], 'method' => 'POST', 'class' => 'pull-right'])!!}  
+                          {{Form::hidden('_method', 'DELETE')}}
+                          {{Form::submit('Delete', ['class' => 'btn btn-danger pull-right'])}}
+                        {!!Form::close()!!}  
                         <hr>
                    </div>
                 @endforeach
               @else
-
-              @endif
-          </div>
+                  <div class="well">You haven't published an article yet</div>
+              @endif          
         </div>
       </div>
     </main>

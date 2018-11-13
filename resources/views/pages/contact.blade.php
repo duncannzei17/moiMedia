@@ -11,6 +11,11 @@
                 <input class="form-control" name="email" type="email" placeholder="Email*" required><br>
                 <input class="form-control" name="phone" type="tel"  pattern="^\+?\d{0,10}" placeholder="Phone*" required><br>
                 <textarea class="form-control" name="message" cols="30" rows="10" placeholder="Message*" required></textarea><br>
+                @if (session('message'))    
+                    <div class="alert alert-success text-center">
+                        {{Session::get('message')}}
+                    </div>
+                @endif
                 {{Form::submit('Send Message',['class'=>'btn btn-default'])}}
 			{!!Form::close()!!}
             </div>

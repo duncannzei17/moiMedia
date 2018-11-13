@@ -5,6 +5,11 @@
   <section id="newsSection">
     <div class="row">
       <div class="col-lg-12 col-md-12">
+                @if (session('success'))    
+                    <div class="alert alert-success text-center">
+                        {{Session::get('success')}}
+                    </div>
+                @endif
         <div class="latest_newsarea"> <span>Latest News</span>
           <ul id="ticker01" class="news_sticker">
             <li><a href="#"><img src="images/news_thumbnail3.jpg" alt="">{{$latest[9]->article_title}}</a></li>
@@ -50,33 +55,33 @@
       </div>
       <div class="col-lg-4 col-md-4 col-sm-4">
         <div class="latest_post">
-          <h2><span>Latest post</span></h2>
+          <h2><span>Popular posts</span></h2>
           <div class="latest_post_container">
             <div id="prev-button"><i class="fa fa-chevron-up"></i></div>
             <ul class="latest_postnav">
               <li>
-                <div class="media"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{ URL::to('/') }}/storage/images/{{$latest[0]->image}}"> </a>
-                  <div class="media-body"> <a href="pages/single_page.html" class="catg_title"> {{$latest[0]->article_title}}</a> </div>
+                <div class="media"> <a href="{{route('single', ['parameter' => $id = $popular[0]->id ])}}" class="media-left"> <img alt="" src="{{ URL::to('/') }}/storage/images/{{$popular[0]->image}}"> </a>
+                  <div class="media-body"> <a href="{{route('single', ['parameter' => $id = $popular[0]->id ])}}" class="catg_title"> {{$popular[0]->article_title}}</a> </div>
                 </div>
               </li>
               <li>
-                <div class="media"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{ URL::to('/') }}/storage/images/{{$latest[1]->image}}"> </a>
-                  <div class="media-body"> <a href="pages/single_page.html" class="catg_title">  {{$latest[1]->article_title}}</a> </div>
+                <div class="media"> <a href="{{route('single', ['parameter' => $id = $popular[1]->id ])}}" class="media-left"> <img alt="" src="{{ URL::to('/') }}/storage/images/{{$popular[1]->image}}"> </a>
+                  <div class="media-body"> <a href="{{route('single', ['parameter' => $id = $popular[1]->id ])}}" class="catg_title">  {{$popular[1]->article_title}}</a> </div>
                 </div>
               </li>
               <li>
-                <div class="media"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{ URL::to('/') }}/storage/images/{{$latest[2]->image}}"> </a>
-                  <div class="media-body"> <a href="pages/single_page.html" class="catg_title">  {{$latest[2]->article_title}}</a> </div>
+                <div class="media"> <a href="{{route('single', ['parameter' => $id = $popular[2]->id ])}}" class="media-left"> <img alt="" src="{{ URL::to('/') }}/storage/images/{{$popular[2]->image}}"> </a>
+                  <div class="media-body"> <a href="{{route('single', ['parameter' => $id = $popular[2]->id ])}}" class="catg_title">  {{$popular[2]->article_title}}</a> </div>
                 </div>
               </li>
               <li>
-                <div class="media"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{ URL::to('/') }}/storage/images/{{$latest[3]->image}}"> </a>
-                  <div class="media-body"> <a href="pages/single_page.html" class="catg_title">  {{$latest[3]->article_title}}</a> </div>
+                <div class="media"> <a href="{{route('single', ['parameter' => $id = $popular[3]->id ])}}" class="media-left"> <img alt="" src="{{ URL::to('/') }}/storage/images/{{$popular[3]->image}}"> </a>
+                  <div class="media-body"> <a href="{{route('single', ['parameter' => $id = $popular[3]->id ])}}" class="catg_title">  {{$popular[3]->article_title}}</a> </div>
                 </div>
               </li>
               <li>
-                <div class="media"> <a href="pages/single_page.html" class="media-left"> <img alt="" src="{{ URL::to('/') }}/storage/images/{{$latest[4]->image}}"> </a>
-                  <div class="media-body"> <a href="pages/single_page.html" class="catg_title">  {{$latest[4]->article_title}}</a> </div>
+                <div class="media"> <a href="{{route('single', ['parameter' => $id = $popular[4]->id ])}}" class="media-left"> <img alt="" src="{{ URL::to('/') }}/storage/images/{{$popular[4]->image}}"> </a>
+                  <div class="media-body"> <a href="{{route('single', ['parameter' => $id = $popular[4]->id ])}}" class="catg_title">  {{$popular[4]->article_title}}</a> </div>
                 </div>
               </li>
             </ul>

@@ -11,7 +11,7 @@
  <!-- Bootstrap core CSS -->
  <link href="{{url('css/app.css')}}" rel="stylesheet">
 
-<link rel="stylesheet" type="text/css" href="{{url('css/font-awesome.min.css')}}">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="{{url('css/animate.css')}}">
 <link rel="stylesheet" type="text/css" href="{{url('css/font.css')}}">
 <link rel="stylesheet" type="text/css" href="{{url('css/li-scroller.css')}}">
@@ -37,7 +37,7 @@
         <div class="header_top">
           <div class="header_top_left">
             <ul class="top_nav">
-              <li><a href="{{url('/home')}}">Home</a></li>
+              <li><a href="{{url('/home')}}"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
               <li><a href="#">About</a></li>
               <li><a href="{{action('FeedbackController@index')}}">Contact</a></li>
             @if (auth()->user()->isAdmin == 1)  
@@ -67,7 +67,6 @@
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav main_nav">
-          <li><a href="#"><span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span></a></li>
           <li><a href="{{url('/preference')}}">Preferences</a></li>
           <li>
                 <a href="{{ route('logout') }}"
@@ -101,11 +100,11 @@
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4">
             <div class="footer_widget wow fadeInDown">
-                <h2>Tag</h2>
+                <h2>Links</h2>
                 <ul class="tag_nav">
                 <li><a href="{{url('/preference')}}">Preferences</a></li>
                 <li><a href="{{action('FeedbackController@index')}}">Contact</a></li>
-                <li><a href="#">Fashion</a></li>
+                <li><a href="#">About</a></li>
                 </ul>
             </div>
             </div>
@@ -133,6 +132,22 @@
 <script src="{{url('js/jquery.newsTicker.min.js')}}"></script> 
 <script src="{{url('js/jquery.fancybox.pack.js')}}"></script> 
 <script src="{{url('js/custom.js')}}"></script>
+<script>
+        var updateArticleStats = {
+            Like: function (articleId) {
+                document.querySelector('#likes-count-' + articleId).textContent++;
+            },
+        };
+
+        var actOnArticle = function (event) {
+            var articleId = event.target.dataset.articleId;
+            var action = event.target.textContent;
+            toggleButtonText[action](event.target);
+            updateArticleStats[action](articleId);
+            axios.post('/articles/' + articleId + '/act',
+                { action: action });
+        };
+<script> 
 
 </body>
 </html>

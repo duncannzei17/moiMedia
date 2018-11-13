@@ -29,56 +29,51 @@
       <ul class="app-menu">
         <li><a class="app-menu__item" href="{{action('ArticlesController@index')}}"><i class="app-menu__icon fa fa-file-text"></i><span class="app-menu__label">Articles</span></a></li>
         <li><a class="app-menu__item" href="{{ url('/publisher') }}"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Publish</span></a></li>
-        <li><a class="app-menu__item" href="{{action('ArticlesController@create')}}"><i class="fa fa-bar-chart-o"></i><span class="app-menu__label">Report</span></a></li>
+        <li><a class="app-menu__item" href="{{action('ArticlesController@create')}}"><i class="fa fa-bar-chart-o"></i></i><span class="app-menu__label">Report</span></a></li>
       </ul>
     </aside>
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-edit"></i> Article Publisher</h1>
+          <h1><i class="fa fa-bar-chart-o"></i></i>Statistics</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-          <li class="breadcrumb-item"><a href="#">Article Publisher</a></li>
+          <li class="breadcrumb-item"><a href="#">Statistics</a></li>
         </ul>
       </div>
       <div class="row">
-        <div class="col-md-12">
-          <div class="tile">
-            <div class="tile-body">
-            {!!Form::open(['method'=>'POST', 'action'=>'ArticlesController@store', 'enctype'=>'multipart/form-data'])!!}
-                <div class="form-group">
-                  <label class="control-label">Article Title</label>
-                  <input class="form-control" name="title" type="text" placeholder="Enter article title" required>
-                </div>
-                <div class="form-group">
-                  <label class="control-label">Author Name</label>
-                  <input class="form-control" name="author_name" type="text" placeholder="Enter name to be published" required>
-                </div>
-                <div class="form-group">
-                  <label class="control-label">Article Content</label>
-                  <textarea class="form-control" name="content" rows="16" placeholder="Type your article here" required></textarea>
-                </div>
-                <div class="form-group">
-                  <label class="control-label">Upload article image</label>
-                  <input class="form-control" name="image" type="file">
+            <div class="col-md-12">
+            <div class="tile">
+                <h3 class="tile-title">Popular posts</h3>
+                <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Date published</th>
+                        <th>Likes count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                @foreach($posts as $post)
+                    <tr>
+                        <td>{{$post->id}}</td>
+                        <td>{{$post->article_title}}</td>
+                        <td>{{$post->author_name}}</td>
+                        <td>{{$post->created_at}}</td>
+                        <td>{{$post->likes_count}}</td>
+                    </tr>
+                @endforeach
+                    </tbody>
+                </table>
                 </div>
             </div>
-            @if (session('store'))    
-                    <div class="alert alert-success text-center">
-                        {{Session::get('store')}}
-                    </div>
-                @endif
-            <div class="tile-footer">
-              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Publish</button>&nbsp;&nbsp;&nbsp;
-            </div>
-            {!!Form::close()!!}
-          </div>
         </div>
-      </div>
-    </main>
-    <!-- Essential javascripts for application to work-->
-    <script src="{{url('js/jquery.min.js')}}"></script>
+ <!-- Essential javascripts for application to work-->
+ <script src="{{url('js/jquery.min.js')}}"></script>
     <script src="{{url('js/popper.min.js')}}"></script>
     <script src="{{url('js/bootstrap.min.js')}}"></script>
     <script src="{{url('js/main.js')}}"></script>

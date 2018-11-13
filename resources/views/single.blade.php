@@ -18,7 +18,16 @@
                 <img style="width:80%;" class="img-center" src="{{ URL::to('/') }}/storage/images/{{$article->image}}" alt="">
               </div>
               <p>{{$article->article_content}}</p>
-            </div></div>
+            </div>
+            <br>
+   
+            <div class="row">
+   
+            <button onclick="actOnArticle(event);" id="like" data-article-id="{{ $article->id }}" ><i class="fa fa-thumbs-up">Like</i></button>
+
+            </div>
+            <br>
+            </div>
           </div>
         </div>
       </div>

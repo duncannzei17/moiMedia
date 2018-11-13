@@ -36,4 +36,12 @@ class PagesController extends Controller
     public function publisher(){
         return view('admin.publisher');
     }
+
+    public function edit(){
+        return view('admin.edit');
+    }
+
+    public function report(){
+        return view('admin.report');
+    }
 }

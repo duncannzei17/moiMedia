@@ -12,6 +12,8 @@ use Auth;
 
 use DB;
 
+use Session;
+
 class ArticlesController extends Controller
 {
     /**
@@ -23,6 +25,7 @@ class ArticlesController extends Controller
     {
         $cluster = Auth::user()->cluster;
         $articles = Article::all()->where('cluster', $cluster);
+        
         return view('admin.landing')->with('articles', $articles );
 
     }
@@ -35,7 +38,12 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        //
+        //Report on most popular posts
+        $cluster = Auth::user()->cluster;
+        $posts = DB::table('articles')->orderBy('likes_count', 'DESC')->where('cluster', $cluster)->get();;
+        
+      return view('admin.report')->with('posts', $posts );
+    
     }
 
     /**
@@ -71,7 +79,8 @@ class ArticlesController extends Controller
         $article->cluster = Auth::user()->cluster;
         $article->save();
 
-        return back();
+        $store = "Article has been published successfully";
+        return back()->with('store', $store);
     }
 
     /**
@@ -103,11 +112,13 @@ class ArticlesController extends Controller
         $clubs_sql = DB::table('articles')->where('cluster', $clubs)->orderBy('id', 'DESC')->get();
         $community_sql = DB::table('articles')->where('cluster', $community)->orderBy('id', 'DESC')->get();
         $latest = DB::table('articles')->orderBy('id', 'DESC')->get();
+        //Most popular articles
+        $popular = DB::table('articles')->orderBy('likes_count', 'DESC')->get();
 
         //Render view together with article objects
        
        return view('/home1')->with('leisure_sql', $leisure_sql)->with('clubs_sql', $clubs_sql)->with('academics_sql', $academics_sql)
-       ->with('community_sql', $community_sql)->with('latest', $latest)->render();
+       ->with('community_sql', $community_sql)->with('latest', $latest)->with('popular', $popular)->render();
 
     }
 
@@ -119,7 +130,8 @@ class ArticlesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $article = Article::find($id);
+        return view('admin.edit')->with('article', $article);
     }
 
     /**
@@ -131,7 +143,35 @@ class ArticlesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+                //Handle file uploading
+                if($request->hasFile('image')){
+                    //Get the filename with the extension
+                    $filenamewithExt = $request->file('image')->getClientOriginalName();
+                    //Get just filename
+                    $filename = pathinfo($filenamewithExt, PATHINFO_FILENAME);
+                    //Get just ext
+                    $extension = $request->file('image')->getClientOriginalExtension();
+                    //Filename to store
+                    $fileNameToStore = $filename.'_'.time().'.'.$extension;
+                    //upload Image
+                    $path = $request->file('image')->storeAs('public/images/',$fileNameToStore);
+                }else{
+                    $fileNameToStore = 'noimage.jpg';
+                }
+        
+                $article = Article::find($id);
+                $article->author_mail = Auth::user()->email;
+                $article->article_title = $request->input('title');
+                $article->author_name = $request->input('author_name');
+                $article->article_content = $request->input('content');
+                $article->image = $fileNameToStore;
+                $article->cluster = Auth::user()->cluster;
+                $article->save();
+                
+                $cluster = Auth::user()->cluster;
+                $articles = Article::all()->where('cluster', $cluster);
+                $update = "Article has been updated successfully";
+                return back()->with('articles', $articles )->with('update', $update);
     }
 
     /**
@@ -142,6 +182,10 @@ class ArticlesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $article = Article::find($id);
+        $article->delete();
+        $del = "Article has been successfully deleted";
+        return back()->with('del', $del); 
     }
+
 }

@@ -35,7 +35,7 @@
     <main class="app-content">
       <div class="app-title">
         <div>
-          <h1><i class="fa fa-edit"></i> Article Publisher</h1>
+          <h1><i class="fa fa-edit"></i> Article Editor</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
           <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -46,32 +46,33 @@
         <div class="col-md-12">
           <div class="tile">
             <div class="tile-body">
-            {!!Form::open(['method'=>'POST', 'action'=>'ArticlesController@store', 'enctype'=>'multipart/form-data'])!!}
+            {!!Form::open(['method'=>'POST', 'action'=>['ArticlesController@update', $article->id], 'enctype'=>'multipart/form-data'])!!}
                 <div class="form-group">
                   <label class="control-label">Article Title</label>
-                  <input class="form-control" name="title" type="text" placeholder="Enter article title" required>
+                  <input class="form-control" value="{{$article->article_title }}" name="title" type="text">
                 </div>
                 <div class="form-group">
                   <label class="control-label">Author Name</label>
-                  <input class="form-control" name="author_name" type="text" placeholder="Enter name to be published" required>
+                  <input class="form-control" value="{{$article->author_name }}" name="author_name" type="text">
                 </div>
                 <div class="form-group">
                   <label class="control-label">Article Content</label>
-                  <textarea class="form-control" name="content" rows="16" placeholder="Type your article here" required></textarea>
+                  <textarea class="form-control" name="content" rows="16">{{$article->article_content}}</textarea>
                 </div>
-                <div class="form-group">
+              <!--  <div class="form-group">
                   <label class="control-label">Upload article image</label>
                   <input class="form-control" name="image" type="file">
-                </div>
+                </div>  -->
             </div>
-            @if (session('store'))    
+            @if (session('update'))    
                     <div class="alert alert-success text-center">
-                        {{Session::get('store')}}
+                        {{Session::get('update')}}
                     </div>
-                @endif
+                  @endif
             <div class="tile-footer">
-              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Publish</button>&nbsp;&nbsp;&nbsp;
+              <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>&nbsp;&nbsp;&nbsp;
             </div>
+            {{form::hidden('_method', 'PUT')}}
             {!!Form::close()!!}
           </div>
         </div>

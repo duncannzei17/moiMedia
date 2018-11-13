@@ -29,6 +29,10 @@ Route::get('/home1','PagesController@home1');
 
 Route::get('/home1','PagesController@single');
 
+Route::get('/report','PagesController@report');
+
+Route::get('/edit','PagesController@edit');
+
 Route::get('/welcome','PagesController@welcome');
 
 Route::get('single/{id}',['as'=> 'single', 'uses'=>'PagesController@single']);
@@ -41,3 +45,8 @@ Route::resource('Feedback', 'FeedbackController');
 
 Route::get('Article/{id}', 'ArticlesController@show');
 
+Route::get('/addlike', 'LikesController@actOnLike');
+
+Route::post('/articles/{id}/act', 'LikesController@actOnLike');
+
+ 

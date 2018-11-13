@@ -10,6 +10,8 @@ use Auth;
 
 use DB;
 
+use Session;
+
 class PreferencesController extends Controller
 {
     /**
@@ -61,8 +63,8 @@ class PreferencesController extends Controller
         $preference->clubs = $clubs; 
         $preference->community = $community;
         $preference->save();
-        $message = "Preference has been updated succesfully";
-        return view('/home')->with('message', $message);
+       
+        return view('/home');
        
 
         }else{
@@ -76,8 +78,7 @@ class PreferencesController extends Controller
         $preference->community = $community;
         $preference->save();
 
-        $message = "Preference has been updated succesfully";
-        return view('/home')->with('message', $message);
+        return view('/home');
         }
     }
 
